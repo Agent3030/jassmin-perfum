@@ -1,0 +1,400 @@
+@charset "UTF-8";
+/*!
+ *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+/* FONT PATH
+ * -------------------------- */
+
+
+
+
+
+@font-face {
+  font-family: "Lobster";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/lobster.eot?#iefix") format("embedded-opentype"), url("../fonts/lobster.woff2") format("woff2"), url("../fonts/lobster.woff") format("woff"), url("../fonts/lobster.ttf") format("truetype"), url("../fonts/lobster.svg#Lobster") format("svg"); }
+
+@font-face {
+  font-family: "Raleway Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/ralewayregular.eot?#iefix") format("embedded-opentype"), url("../fonts/ralewayregular.woff2") format("woff2"), url("../fonts/ralewayregular.woff") format("woff"), url("../fonts/ralewayregular.ttf") format("truetype"), url("../fonts/ralewayregular.svg#Raleway Regular") format("svg"); }
+
+@font-face {
+  font-family: "Raleway Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/ralewayitalic.eot?#iefix") format("embedded-opentype"), url("../fonts/ralewayitalic.woff2") format("woff2"), url("../fonts/ralewayitalic.woff") format("woff"), url("../fonts/ralewayitalic.ttf") format("truetype"), url("../fonts/ralewayitalic.svg#Raleway Italic") format("svg"); }
+
+.login {
+  display: block;
+  position: relative;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 0.3125em;
+  border-bottom: 2px solid #CCCCCC; }
+  .login .login-group {
+    position: relative;
+    margin: 0.3125em;
+    margin-right: 1.875em; }
+    .login .login-group .login-control {
+      padding-left: 2.5em;
+      padding-right: 1.875em;
+      border-top: 2px solid #CCCCCC;
+      font-size: 1em;
+      font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif; }
+    .login .login-group:first-child:before {
+      font-family: FontAwesome;
+      position: absolute;
+      content: "\F0E0";
+      display: inline-block;
+      font-size: 1em;
+      color: #CCCCCC;
+      left: 0.625em;
+      top: 0.4375em; }
+    .login .login-group:last-child:before {
+      font-family: FontAwesome;
+      position: absolute;
+      content: "\F023";
+      display: inline-block;
+      font-size: 1.125em;
+      color: #CCCCCC;
+      left: 0.625em;
+      top: 0.4375em; }
+
+.form-button {
+  position: absolute;
+  width: 3.75em;
+  height: 3.75em;
+  background-color: #009966;
+  border: 10px solid #FFFFFF;
+  z-index: 10;
+  border-radius: 50%;
+  right: -1.25em;
+  top: 1.25em; }
+  .form-button i {
+    display: block;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: middle;
+    /*padding-top: 0.17em;*/
+    transition-duration: 0.5s; }
+    .form-button i:hover {
+      color: #FF001B;
+      cursor: pointer; }
+
+.search {
+  display: block;
+  position: relative;
+  background-color: #FFFFFF;
+  text-align: center; }
+  .search .search-group {
+    display: block;
+    position: relative;
+    vertical-align: middle;
+    margin: 0em; }
+    .search .search-group .search-control {
+      padding-left: 1.25em;
+      padding-right: 2.5em;
+      border: 5px solid #AF2A79;
+      border-radius: 1.25em;
+      font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+      min-width: 170px; }
+    .search .search-group::before {
+      font-family: FontAwesome;
+      position: absolute;
+      content: "\F002";
+      display: inline-block;
+      font-size: 1em;
+      color: #CCCCCC;
+      right: 0.625em;
+      top: 0.5em; }
+
+body {
+  padding: 0;
+  background: url("../img/vector_art_pink_wallpaper.jpg") center top no-repeat;
+  background-size: cover; }
+
+.head {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  background: url("../img/head_cover.png") center top no-repeat;
+  background-size: cover;
+  min-height: 15vh; }
+  .head::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2vh;
+    background: url("../img/head_cover.png") center center no-repeat;
+    background-size: cover;
+    top: 105%;
+    left: 0; }
+
+section {
+  margin: 0;
+  padding-top: 5vh;
+  padding-bottom: 5vh; }
+
+.main-logo {
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: -0.5vh; }
+  .main-logo img {
+    width: 100%;
+    height: inherit;
+    margin: auto;
+    text-align: center; }
+
+.social-head {
+  list-style: none;
+  padding: 0;
+  padding-top: 12vh;
+  text-align: right;
+  margin: 0;
+  margin-right: 1.875em; }
+  .social-head li {
+    display: inline-block;
+    margin-right: 0.625em; }
+    .social-head li a {
+      color: #330066;
+      transition-duration: 0.5s; }
+      .social-head li a:hover {
+        color: #3300CC; }
+
+.main-menu {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  margin: 0;
+  margin-top: 1.2vh; }
+  .main-menu li {
+    display: inline-block;
+    margin-right: 2.5vw; }
+    .main-menu li:last-child {
+      margin-right: 0; }
+    .main-menu li a {
+      color: #CCCCCC;
+      font-family: "Raleway Italic", Helvetica, Arial, sans-serif, serif;
+      text-transform: capitalize;
+      font-size: 2.5vh;
+      font-weight: 600;
+      text-shadow: -1px 0 #27092F, 0 1px #27092F, 1px 0 #27092F, 0 -1px #27092F;
+      line-height: 0;
+    }
+      .main-menu li a:hover {
+        transition-duration: 0.5s;
+        text-decoration: none;
+        color: #27092F;
+        background-color: transparent;
+        text-shadow: -1px 0 #CCCCCC, 0 1px #CCCCCC, 1px 0 #CCCCCC, 0 -1px #CCCCCC;
+      }
+
+.flags {
+  margin-top: 4vh;
+  padding-right: 20px; }
+  .flags .turk-flag {
+    display: block;
+    border-radius: 50%;
+    padding: 0; }
+    .flags .turk-flag img {
+      margin: auto; }
+  .flags .gb-flag {
+    display: block;
+    border-radius: 50%;
+    padding: 0; }
+    .flags .gb-flag img {
+      margin: auto; }
+  .flags .ukr-flag {
+    display: block;
+    border-radius: 50%;
+    padding: 0; }
+    .flags .ukr-flag img {
+      margin: auto; }
+
+.auth-form {
+  position: relative;
+  margin-top: 10vh;
+  display: block;
+  padding-right: 30px; }
+
+.search {
+  position: relative;
+  margin-top: 25vh;
+  display: block; }
+
+.img-cont-logo {
+  position: relative;
+  margin-top: 35vh;
+  display: block; }
+  .img-cont-logo img {
+    margin: auto;
+    width: 80%;
+    height: 80%; }
+
+.img-cont-crem {
+  position: relative;
+  margin-top: 2vh;
+  display: block; }
+  .img-cont-crem img {
+    margin: auto;
+    width: 60%;
+    height: 60%; }
+
+.img-cont-best {
+  position: relative;
+  margin-top: -2vh;
+  display: block; }
+  .img-cont-best img {
+    margin: auto;
+    width: 50%;
+    height: 50%; }
+
+.img-cont-center {
+  position: relative;
+  margin-top: 10vh;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px; }
+  .img-cont-center img {
+    margin: auto; }
+
+.shop-button {
+  position: relative;
+  margin-top: 15vh;
+  display: block; }
+  .shop-button img {
+    margin: auto;
+    width: 70%;
+    height: 70%; }
+
+.img-cont-perfume1 {
+  position: relative;
+  margin-top: 10vh;
+  display: block;
+  padding-left: 1.25em; }
+  .img-cont-perfume1 img {
+    margin: auto; }
+
+.img-cont-perfume2 {
+  position: relative;
+  margin-top: 10vh;
+  display: block;
+  padding-right: 1.25em; }
+  .img-cont-perfume2 img {
+    margin: auto; }
+
+.img-cont-map {
+  position: relative;
+  margin-top: 3vh;
+  display: block; }
+  .img-cont-map img {
+    margin: auto;
+    width: 70%;
+    height: 70%; }
+
+.img-cont-bestgirl {
+  position: relative;
+  margin-top: 4vh;
+  display: block; }
+  .img-cont-bestgirl img {
+    margin: auto; }
+
+.img-cont-news {
+  position: relative;
+  margin-top: 3vh;
+  display: block; }
+  .img-cont-news img {
+    margin: auto;
+    width: 70%;
+    height: 70%; }
+
+.img-cont-foto {
+  position: relative;
+  margin-top: 5vh;
+  display: block; }
+  .img-cont-foto img {
+    margin: auto; }
+
+ .content {
+   background-color:  #FFE5EE;
+   padding: 20px;
+   margin: 4vh;
+   min-height: 75vh;
+ }
+  .content h1{
+    font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #27092F;
+  }
+  .content p {
+    font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: justify;
+    color: #27092F;
+  }
+.site-contact {
+  background-color:  #FFE5EE;
+  padding: 20px;
+  margin: 4vh;
+  min-height: 75vh;
+}
+.site-contact h1{
+  font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #27092F;
+}
+.site-contact p {
+  font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: justify;
+  color: #27092F;
+}
+
+.site-error {
+  background-color:  #FFE5EE;
+  padding: 20px;
+  margin: 4vh;
+  min-height: 75vh;
+}
+.site-error h1{
+  font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #27092F;
+}
+.site-error p {
+  font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: justify;
+  color: #27092F;
+}
+.site-login {
+  background-color:  #FFE5EE;
+  padding: 20px;
+  margin: 4vh;
+  min-height: 75vh;
+}
+.site-login h1{
+  font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #27092F;
+}
+.site-login p {
+  font-family: "Raleway Regular", Helvetica, Arial, sans-serif, serif;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: justify;
+  color: #27092F;
+}
+/*# sourceMappingURL=styles.css.map*/

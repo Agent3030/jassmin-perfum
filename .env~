@@ -1,0 +1,40 @@
+# Framework
+# ---------
+YII_DEBUG   = true
+YII_ENV     = dev
+
+# Databases
+# ---------
+DB_DSN           = mysql:host=localhost;port=3306;dbname=jassminperfume
+DB_USERNAME      = u_jassminper
+DB_PASSWORD      = sh2OoUvG
+DB_TABLE_PREFIX  =
+
+# Urls
+# ----
+FRONTEND_URL    = /
+BACKEND_URL     = /backend
+STORAGE_URL     = /storage/web
+# FRONTEND_PATH   = jassmin-perfume.com
+# BACKEND_PATH    = jassmin-perfume.com/backend
+# STORAGE_PATH    = jassmin-perfume.com/storage
+
+# Other
+# -----
+SMTP_HOST = localhost
+SMTP_PORT = 25
+
+FRONTEND_COOKIE_VALIDATION_KEY = RzTKvO6-8O3yQJpbPw5yQzSh2xbQJ9jG
+BACKEND_COOKIE_VALIDATION_KEY = GONXrW5UzHYC-xO-TeLMeOR5_gKAkNX0
+
+ADMIN_EMAIL    = admin@jassmin-perfume.com
+ROBOT_EMAIL    = robot@jassmin-perfume.com
+GITHUB_CLIENT_ID = your-client-id
+GITHUB_CLIENT_SECRET = your-client-secret
+
+FACEBOOK_CLIENT_ID = your-client-id
+FACEBOOK_CLIENT_SECRET = your-client-secret
+
+GLIDE_SIGN_KEY = Gigth5m7PoFFIhCqD-CjsmBqV-IcVJbO
+GLIDE_MAX_IMAGE_SIZE = 4000000
+
