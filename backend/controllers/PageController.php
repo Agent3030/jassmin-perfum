@@ -5,7 +5,6 @@ namespace backend\controllers;
 use common\models\PageI18;
 use Yii;
 use common\models\Page;
-use common\models\PageTr;
 use common\models\PageUk;
 use common\models\Languages;
 use yii\base\Model;
@@ -54,15 +53,12 @@ class PageController extends Controller
     public function actionCreate()
     {
         $model = new Page();
-        $modelTr = new PageTr();
         $modelUk = new PageUk();
 
-        if ($model->load(Yii::$app->request->post()) && $modelTr->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post())&& Model::validateMultiple([$model, $modelTr, $modelUk])) {
+        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post())&& Model::validateMultiple([$model, $modelUk])) {
 
             $model->save(false);
 
-            $modelTr->page_id = $model->id;
-            $modelTr->save(false);
             $modelUk->page_id = $model->id;
             $modelUk->save(false);
 
@@ -70,7 +66,6 @@ class PageController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'modelTr' => $modelTr,
                 'modelUk'=> $modelUk
             ]);
         }
@@ -89,23 +84,18 @@ class PageController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $turkLang = Languages::getLanguageByCode('tr-TR');
-        $ukrLang = Languages::getLanguageByCode('uk-UA');
-        $modelTr = PageI18::getPageI18byLangAndPageId($turkLang->id,$model->id);
-        $modelUk = PageI18::getPageI18byLangAndPageId($ukrLang->id,$model->id);
+        $modelUk = PageUk::getPageUkByLangAndPageId($id);
 
 
-        if ($model->load(Yii::$app->request->post()) && $modelTr->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $modelTr, $modelUk])) {
+        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $modelUk])) {
 
 
                 $model->save(false);
-                $modelTr->save(false);
                 $modelUk->save(false);
                 return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'modelTr' => $modelTr,
                     'modelUk' => $modelUk
                 ]);
             }

@@ -3,7 +3,10 @@
 namespace frontend\controllers;
 
 use common\models\Article;
+use common\models\ArticleI18;
 use common\models\ArticleAttachment;
+use common\models\Languages;
+use frontend\models\search\ArticleI18Search;
 use frontend\models\search\ArticleSearch;
 use Yii;
 use yii\web\Controller;
@@ -17,12 +20,21 @@ class ArticleController extends Controller
     /**
      * @return string
      */
+    public $layout = 'article';
     public function actionIndex()
     {
-        $searchModel = new ArticleSearch();
+        $currentLanguage = Yii::$app->language;
+        $lang = Languages::getLanguageByCode($currentLanguage);
+        if ($lang->status == true) {
+            $searchModel = new ArticleSearch();
+        } else {
+            $searchModel = new ArticleI18Search();
+
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort = [
-            'defaultOrder' => ['created_at' => SORT_DESC]
+            'defaultOrder' => ['created_at' => SORT_DESC],
+
         ];
         return $this->render('index', ['dataProvider'=>$dataProvider]);
     }
@@ -34,13 +46,32 @@ class ArticleController extends Controller
      */
     public function actionView($slug)
     {
-        $model = Article::find()->published()->andWhere(['slug'=>$slug])->one();
-        if (!$model) {
-            throw new NotFoundHttpException;
-        }
+        $currentLanguage = Yii::$app->language;
+        $lang = Languages::getLanguageByCode($currentLanguage);
 
-        $viewFile = $model->view ?: 'view';
-        return $this->render($viewFile, ['model'=>$model]);
+        if ($lang->status) {
+            $model = Article::find()->published()->andWhere(['slug' => $slug])->one();
+            if (!$model) {
+                throw new NotFoundHttpException;
+            }
+
+            $viewFile = $model->view ?: 'view';
+            return $this->render($viewFile, ['model' => $model]);
+
+
+
+        } else {
+            $model = Article::find()->published()->andWhere(['slug' => $slug])->one();
+            $modelI18 = $model->articleI18;
+            if(!$model | !$modelI18){
+                throw new NotFoundHttpException;
+            }
+            $viewFile = $model->view ?: 'view';
+            return $this->render($viewFile, [
+                'model' => $model,
+                'modelI18' => $modelI18
+            ]);
+        }
     }
 
     /**

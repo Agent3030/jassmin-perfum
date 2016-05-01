@@ -96,4 +96,8 @@ class ArticleCategory extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ArticleCategory::className(), ['id' => 'parent_id']);
     }
+    public function getArticleCategoryI18()
+    {
+        return $this->hasOne(ArticleCategoryI18::className(),['article_category_id' => 'id']);
+    }
 }

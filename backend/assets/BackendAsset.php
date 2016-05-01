@@ -24,6 +24,7 @@ class BackendAsset extends AssetBundle
 
     public $depends = [
         'yii\web\YiiAsset',
+        'yii\web\JqueryAsset',
         'common\assets\AdminLte',
         'common\assets\Html5shiv'
     ];

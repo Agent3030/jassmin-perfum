@@ -6,16 +6,17 @@
 
 $this->title = !isset($modelI18) ? $model->title : $modelI18->title;
 ?>
-<div class = "col-md-10">
-<div class="content">
-    <?php if (!isset($modelI18)):?>
-    <h1><?php echo $model->title ?></h1>
-    <p><?php echo $model->body ?></p>
+<div class = "page-content-main"
+    <div class = "col-md-12">
 
-    <?php else:?>
-    <h1><?php echo $modelI18->title ?></h1>
-    <p><?php echo $modelI18->body ?></p>
+        <?php if (!isset($modelI18)):?>
+        <h1><?php echo $model->title ?></h1>
+        <p><?php echo $model->body ?></p>
 
-    <?php endif; ?>
-</div>
+        <?php else:?>
+        <h1><?php echo $modelI18->title ?></h1>
+        <p><?php echo $modelI18->body ?></p>
+
+        <?php endif; ?>
+    </div>
 </div>

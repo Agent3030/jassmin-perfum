@@ -4,6 +4,12 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\ContactForm;
 use yii\web\Controller;
+use common\models\Offices;
+use common\models\OfficesI18;
+use frontend\models\search\OfficesSearch;
+use frontend\models\search\OfficesI18Search;
+use frontend\components\GoogleMaps\GoogleMaps;
+use common\models\Languages;
 
 /**
  * Site controller
@@ -32,29 +38,98 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+
         return $this->render('index');
+
     }
 
-    public function actionContact()
+    public function actionContacts()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->contact(Yii::$app->params['adminEmail'])) {
-                Yii::$app->getSession()->setFlash('alert', [
-                    'body'=>Yii::t('frontend', 'Thank you for contacting us. We will respond to you as soon as possible.'),
-                    'options'=>['class'=>'alert-success']
-                ]);
-                return $this->refresh();
-            } else {
-                Yii::$app->getSession()->setFlash('alert', [
-                    'body'=>\Yii::t('frontend', 'There was an error sending email.'),
-                    'options'=>['class'=>'alert-danger']
-                ]);
-            }
-        }
+        $this->layout = 'contact';
+        $markAddr = [];
+        $lang = Languages::getLanguageByCode(Yii::$app->language);
 
-        return $this->render('contact', [
-            'model' => $model
-        ]);
+
+        if ($lang->status == true) {
+            $searchModel = new OfficesSearch();
+            $dataProvider = $searchModel->search(['OfficesSearch' => Yii::$app->request->queryParams]);
+            $models = $dataProvider -> models;
+
+            foreach ($models as $model) {
+
+                $markAddr[] = $model -> city;
+                $markAddr[] = $model -> street;
+                $markAddr[] = $model -> house;
+                $marker = implode(' ', $markAddr);
+
+
+                GoogleMaps::setMarker($marker, $model->status);
+
+                $markAddr = [];
+            }
+
+
+            $dataProvider  = $searchModel->search(['OfficesSearch'=>['status'=> 'Head Office']]);
+            $headOffice = $dataProvider -> models;
+            GoogleMaps::setLntLng($headOffice[0]->city);
+
+            $dataProvider = $searchModel -> search(['OfficesSearch'=>['status'=> 'stock']]);
+            $stocks = $dataProvider-> models;
+
+
+            $dataProvider = $searchModel -> search(['OfficesSearch'=>['status'=> 'branch']]);
+            $branches = $dataProvider-> models;
+
+
+
+
+
+
+        } else {
+            $searchModel = new OfficesI18Search();
+
+            $dataProvider = $searchModel->search(['OfficesSearch' => Yii::$app->request->queryParams]);
+            $models = $dataProvider -> models;
+
+             foreach ($models as $model) {
+                 $markAddr[] = $model->city;
+                 $markAddr[] = $model->street;
+                 $markAddr[] = $model->offices->house;
+                 $marker = implode(' ', $markAddr);
+
+                 GoogleMaps::setMarker($marker, $model->status);
+                 $markAddr = [];
+             }
+
+
+            $dataProvider  = $searchModel->search(['OfficesI18Search'=>['status'=> 'Головний офіс']]);
+            $headOffice = $dataProvider -> models;
+            GoogleMaps::setLntLng($headOffice[0]->city);
+
+            $dataProvider  = $searchModel->search(['OfficesI18Search'=>['status'=> 'склад']]);
+            $stocks = $dataProvider->models;
+
+
+
+
+            $dataProvider  = $searchModel->search(['OfficesI18Search'=>['status'=> 'філія']]);
+            $branches = $dataProvider->models;
+        }
+        $latLng = GoogleMaps::getLntLng();
+        $markers = GoogleMaps::getMarker();
+
+
+
+        return $this->render('contact', ['headOffice'=>$headOffice,
+                                        'stocks' => $stocks,
+                                        'branches' => $branches ,
+                                        'latLng' => $latLng,
+                                        'markers'=> $markers,
+                                        'zoom' => 10
+                                    ]);
+
+
+
+
     }
 }

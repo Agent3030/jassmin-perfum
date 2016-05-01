@@ -38,7 +38,7 @@ class PageSearch extends Page
      */
     public function search($params)
     {
-        $query = Page::find();
+        $query = Page::find()->with('pageI18');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

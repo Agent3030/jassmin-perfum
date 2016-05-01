@@ -52,6 +52,16 @@ class Languages extends \yii\db\ActiveRecord
        return $this -> hasOne(PageI18::className(), ['language_id' => 'id']);
     }
 
+    public function getArticleI18()
+    {
+        return $this -> hasOne(ArticleI18::className(), ['language_id' => 'id']);
+    }
+
+    public function getArticleCategoryI18()
+    {
+        return $this -> hasOne(ArticleCategoryI18::className(), ['language_id' => 'id']);
+    }
+
     static public function getLanguageByCode($code)
     {
         return Languages::find()->where(['code'=>$code])->one();

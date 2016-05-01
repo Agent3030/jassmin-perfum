@@ -38,7 +38,7 @@ class ArticleSearch extends Article
      */
     public function search($params)
     {
-        $query = Article::find();
+        $query = Article::find()->with('articleI18');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
+
+use common\models\ArticleCategoryUk;
 use Yii;
+use yii\base\Model;
 use common\models\ArticleCategory;
 use backend\models\search\ArticleCategorySearch;
 use yii\helpers\ArrayHelper;
@@ -62,15 +65,20 @@ class ArticleCategoryController extends Controller
     public function actionCreate()
     {
         $model = new ArticleCategory();
-
+        $modelUk = new ArticleCategoryUk();
         $categories = ArticleCategory::find()->noParents()->all();
         $categories = ArrayHelper::map($categories, 'id', 'title');
+       if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$modelUk])) {
+           $model->save(false);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+
+           $modelUk->article_category_id = $model->id;
+           $modelUk->save(false);
+           return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelUk' => $modelUk,
                 'categories' => $categories,
             ]);
         }
@@ -85,19 +93,23 @@ class ArticleCategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        $categories = ArticleCategory::find()->noParents()->andWhere(['not in', 'id', $id])->all();
+        $modelUk = ArticleCategoryUk::getArticleCategoryUkByArticleCategoryId($model->id);
+        $categories = ArticleCategory::find()->noParents()->all();
         $categories = ArrayHelper::map($categories, 'id', 'title');
+        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $modelUk])) {
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->save(false);
+             $modelUk->save(false);
             return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
+            return $this->render('create', [
                 'model' => $model,
-                'categories' => $categories,
+                'modelUk' => $modelUk,
+                'categories' => $categories
             ]);
         }
+
     }
 
     /**
@@ -108,7 +120,10 @@ class ArticleCategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $modelI18 = $model->articleCategoryI18;
+        $modelI18->delete();
+        $model->delete();
 
         return $this->redirect(['index']);
     }

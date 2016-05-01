@@ -151,9 +151,9 @@ $config = [
         'robotEmail' => getenv('ROBOT_EMAIL'),
         'availableLocales'=>[
             'en-US'=>'English (US)',
-            'tr-TR'=>'Türk',
             'uk-UA'=>'Українська (Україна)',
         ],
+        'googleApiKey' =>'AIzaSyA3U-QMacrEJzg-BzHoZHTBI3NPSU30HWM',
     ],
 ];
 

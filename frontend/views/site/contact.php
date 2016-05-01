@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii\captcha\Captcha;
+
+
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
@@ -10,25 +10,143 @@ use yii\captcha\Captcha;
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class = "col-md-10">
-<div class="site-contact">
-    <h1><?php echo Html::encode($this->title) ?></h1>
+<div class = "container">
+<?php if ((Yii::$app->language == 'en-US')):?>
 
-    <div class="row">
-        <div class="col-md-8">
-            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-                <?php echo $form->field($model, 'name') ?>
-                <?php echo $form->field($model, 'email') ?>
-                <?php echo $form->field($model, 'subject') ?>
-                <?php echo $form->field($model, 'body')->textArea(['rows' => 6]) ?>
-                <?php echo $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                ]) ?>
-                <div class="form-group">
-                    <?php echo Html::submitButton(Yii::t('frontend', 'Submit'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+<div class="col-md-12">
+    <div class="contacts-content-main">
+        <h1><?php echo Yii::t('frontend', 'contacts') ?></h1>
+
+
+        <div class = "row">
+            <div class="col-md-8 head-office-map">
+                <?php echo \app\components\widgets\GoogleMaps::widget([
+                    'lntlng'=> $latLng,
+                    'zoom' => $zoom,
+                    'size' => ['width' => '100%', 'height' => '700px'],
+                    'markers' => $markers
+                ]);?>
+
+            </div>
+            <div class="col-md-4 head-office-content">
+                <div class="col-md-12">
+                    <?php foreach ($headOffice as $model):?>
+                        <h2>head office</h2>
+                        <h3 class ="address">adress</h3>
+                        <ul>
+                            <li><span>city:</span><?= Html::encode($model->city)?></li>
+                            <li><span>region:</span><?= Html::encode($model->region)?></li>
+                            <li><span>street:</span><?= Html::encode($model->street)?></li>
+                            <li><span>house:</span><?= Html::encode($model->house)?></li>
+                            <?php if ($model->appartment):?>
+                            <li><span>appartment:</span><?= Html::encode($model->appartment)?></li>
+                            <?php endif; ?>
+                            <li><span>index:</span><?= Html::encode($model->index)?></li>
+                        </ul>
+                        <h3 class = "tel">tel.:</h3>
+                        <p><?= Html::encode($model->tel) ?></p>
+                    <?php endforeach; ?>
+                    </div>
+
+                <div class="col-md-12">
+                    <?php foreach ($stocks as $model):?>
+                        <h2>stocks</h2>
+                        <h3 class ="address">adress</h3>
+                        <ul>
+                            <li><span>city:</span><?= Html::encode($model->city)?></li>
+                            <li><span>region:</span><?= Html::encode($model->region)?></li>
+                            <li><span>street:</span><?= Html::encode($model->street)?></li>
+                            <li><span>house:</span><?= Html::encode($model->house)?></li>
+                            <?php if ($model->appartment):?>
+                                <li><span>appartment:</span><?= Html::encode($model->appartment)?></li>
+                            <?php endif; ?>
+                            <li><span>index:</span><?= Html::encode($model->index)?></li>
+                        </ul>
+                        <h3 class = "tel">tel.:</h3>
+                        <p><?= Html::encode($model->tel) ?></p>
+                    <?php endforeach; ?>
                 </div>
-            <?php ActiveForm::end(); ?>
+             </div>
+            <div class ="col-md-12 contact-button">
+                <?= Html::a('leave message', ['/site/contact-message'], ['class' => 'contact-message-button']); ?>
+            </div>
+
         </div>
+
+
     </div>
+
+
 </div>
+
+<?php else:?>
+
+<div class="col-md-12">
+    <div class="contacts-content-main">
+        <h1><?php echo Yii::t('frontend', 'contacts') ?></h1>
+
+        <div class = "row">
+            <div class="col-md-8 head-office-map">
+                <?php echo \app\components\widgets\GoogleMaps::widget([
+                    'lntlng'=> $latLng,
+                    'zoom' => $zoom,
+                    'size' => ['width' => '100%', 'height' => '700px'],
+                    'markers' => $markers,
+                ]);?>
+
+            </div>
+            <div class="col-md-4 head-office-content">
+                <div class="col-md-12">
+                    <?php foreach ($headOffice as $model):?>
+                        <h2>head office</h2>
+                        <h3 class ="address">adress</h3>
+                        <ul>
+                            <li><span>city:</span><?= Html::encode($model->city)?></li>
+                            <li><span>region:</span><?= Html::encode($model->region)?></li>
+                            <li><span>street:</span><?= Html::encode($model->street)?></li>
+                            <li><span>house:</span><?= Html::encode($model->offices->house)?></li>
+                            <?php if ($model->offices->appartment):?>
+                                <li><span>appartment:</span><?= Html::encode($model->offices->appartment)?></li>
+                            <?php endif; ?>
+                            <li><span>index:</span><?= Html::encode($model->offices->index)?></li>
+                        </ul>
+                        <h3 class = "tel">tel.:</h3>
+                        <p><?= Html::encode($model->offices->tel) ?></p>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="col-md-12">
+                    <?php foreach ($stocks as $model):?>
+                        <h2>stocks</h2>
+                        <h3 class ="address">adress</h3>
+                        <ul>
+                            <li><span>city:</span><?= Html::encode($model->city)?></li>
+                            <li><span>region:</span><?= Html::encode($model->region)?></li>
+                            <li><span>street:</span><?= Html::encode($model->street)?></li>
+                            <li><span>house:</span><?= Html::encode($model->offices->house)?></li>
+                            <?php if ($model->offices->appartment):?>
+                                <li><span>appartment:</span><?= Html::encode($model->offices->appartment)?></li>
+                            <?php endif; ?>
+                            <li><span>index:</span><?= Html::encode($model->offices->index)?></li>
+                        </ul>
+                        <h3 class = "tel">tel.:</h3>
+                        <p><?= Html::encode($model->offices->tel) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <div class ="col-md-12 contact-button">
+                <?= Html::a('leave message', ['/site/contact-message'], ['class' => 'contact-message-button']); ?>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+<?php endif; ?>
 </div>

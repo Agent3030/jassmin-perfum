@@ -2,15 +2,17 @@
 /* @var $this yii\web\View */
 $this->title = Yii::t('frontend', 'Articles')
 ?>
-<div class="col-md-10">
-<div id="article-index">
-    <h1><?php echo Yii::t('frontend', 'Articles') ?></h1>
-    <?php echo \yii\widgets\ListView::widget([
-        'dataProvider'=>$dataProvider,
-        'pager'=>[
-            'hideOnSinglePage'=>true,
-        ],
-        'itemView'=>'_item'
-    ])?>
-</div>
+
+
+<div class="col-md-12">
+    <div class="article-content-main">
+        <h1><?php echo Yii::t('frontend', 'news') ?></h1>
+        <?php echo \yii\widgets\ListView::widget([
+            'dataProvider'=>$dataProvider,
+            'pager'=>[
+                'hideOnSinglePage'=>true,
+            ],
+            'itemView'=>'_item'
+        ])?>
+    </div>
 </div>

@@ -9,6 +9,9 @@ namespace frontend\assets;
 
 use yii\web\AssetBundle;
 use frontend\assets\FontAwesomeAsset;
+use frontend\assets\ParallaxJsAsset;
+use frontend\assets\ScrollToAsset;
+
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -24,13 +27,16 @@ class FrontendAsset extends AssetBundle
     ];
 
     public $js = [
-        'js/index.js',
+        'js/scripts.js',
     ];
 
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         '\rmrevin\yii\fontawesome\AssetBundle',
+        '\frontend\assets\ParallaxJsAsset',
+        '\frontend\assets\ScrollToAsset',
+
 
     ];
 }

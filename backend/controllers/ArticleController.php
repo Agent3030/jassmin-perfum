@@ -4,8 +4,13 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Article;
+use common\models\ArticleI18;
+use common\models\ArticleUk;
+use common\models\Languages;
 use backend\models\search\ArticleSearch;
 use \common\models\ArticleCategory;
+use common\models\ArticleCategoryUk;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,15 +57,25 @@ class ArticleController extends Controller
     public function actionCreate()
     {
         $model = new Article();
+        $modelUk = new ArticleUk();
+        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$modelUk])) {
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->save(false);
+
+            $modelUk->article_id = $model->id;
+            $modelUk->save(false);
+
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelUk'=> $modelUk,
                 'categories' => ArticleCategory::find()->active()->all(),
+                'categoriesUk' => ArticleCategoryUk::getArticleCategoriesUkByLang(),
+
             ]);
         }
+
     }
 
     /**
@@ -72,13 +87,21 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelUk = ArticleUk::getArticleUkByLangAndArticleId($model->id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $modelUk])) {
+
+
+            $model->save(false);
+            $modelUk->save(false);
             return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
+            return $this->render('create', [
                 'model' => $model,
+                'modelUk' => $modelUk,
                 'categories' => ArticleCategory::find()->active()->all(),
+                'categoriesUk' => ArticleCategoryUk::getArticleCategoriesUkByLang(),
             ]);
         }
     }
@@ -91,7 +114,10 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $modelI18 = $model->articleI18;
+        $modelI18->delete();
+        $model->delete();
 
         return $this->redirect(['index']);
     }

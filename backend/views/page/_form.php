@@ -34,29 +34,6 @@ use yii\bootstrap\ActiveForm;
     ) ?>
 
 
-
-
-    <h4>Turkey Translastion</h4>
-
-    <?php echo $form->field($modelTr, 'language_id')->hiddenInput(['value' => 2]); ?>
-
-    <?php echo $form->field($modelTr, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?php echo $form->field($modelTr, 'body')->widget(
-        \yii\imperavi\Widget::className(),
-        [
-            'plugins' => ['fullscreen', 'fontcolor', 'video'],
-            'options'=>[
-                'minHeight'=>400,
-                'maxHeight'=>400,
-                'buttonSource'=>true,
-                'imageUpload'=>Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
-            ]
-        ]
-    ) ?>
-
-
-
     <h4>Переклад Українською</h4>
 
     <?php echo $form->field($modelUk, 'language_id')->hiddenInput(['value' => 3]); ?>

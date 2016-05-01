@@ -19,42 +19,14 @@ class PageUk extends PageI18
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'page_i18';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['page_id', 'language_id'], 'integer'],
-            [['title', 'body'], 'required'],
-            [['body'], 'string'],
-            [['title'], 'string', 'max' => 512]
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'page_id' => 'Page ID',
-            'language_id' => 'Language ID',
-            'title' => 'Title',
-            'body' => 'Body',
-        ];
-    }
-
-
-
+    const lang = 'uk-UA';
     static public function getPageUkbyPageId($id)
     {
         return PageUk::find()->where(['page_id' => $id]) -> one();
+    }
+    static public function getPageUkByLangAndPageId($id)
+    {
+        $lang = Languages::getLanguageByCode(self::lang)->id;
+        return PageUk::find()->where(['language_id'=>$lang,'page_id' => $id]) -> one();
     }
 }

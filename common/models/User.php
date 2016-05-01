@@ -288,4 +288,9 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return $this->email;
     }
+
+    public function getPartner()
+    {
+        return $this->hasOne(UsersToPartners::className(),['user_id' => 'id']);
+    }
 }

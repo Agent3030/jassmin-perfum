@@ -17,12 +17,13 @@ use yii\web\NotFoundHttpException;
 
 class PageController extends Controller
 {
+    public $layout = 'page';
     public function actionView($slug)
     {
         $currentLanguage = Yii::$app->language;
         $lang = Languages::getLanguageByCode($currentLanguage);
 
-        if ($lang->id === 1) {
+        if ($lang->status) {
 
             $model = Page::find()->where(['slug' => $slug, 'status' => Page::STATUS_PUBLISHED])->one();
             if (!$model) {
@@ -37,14 +38,16 @@ class PageController extends Controller
         } else {
 
             $model = Page::find()->where(['slug' => $slug, 'status' => Page::STATUS_PUBLISHED])->one();
-            $modelI18 = PageI18::getPageI18byLangAndPageId($lang->id, $model->id);
+            $modelI18 = $model->pageI18;
 
             if(!$model | !$modelI18){
                 throw new NotFoundHttpException(Yii::t('frontend', 'Page not found'));
             }
 
             $viewFile = $model->view ?: 'view';
-            return $this->render($viewFile, ['modelI18' => $modelI18]);
+            return $this->render($viewFile, [
+                'model' => $modelI18,
+                'modelI18' => $modelI18]);
         }
 
 

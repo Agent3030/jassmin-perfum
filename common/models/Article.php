@@ -178,4 +178,18 @@ class Article extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ArticleAttachment::className(), ['article_id' => 'id']);
     }
+
+    public function getArticleI18()
+    {
+        return $this->hasOne(ArticleI18::className(),['article_id' => 'id']);
+    }
+
+    public function getArticleTr()
+    {
+        return $this->hasOne(ArticleTr::className(),['article_id' => 'id']);
+    }
+    public function getArticleUk()
+    {
+        return $this->hasOne(ArticleUk::className(),['article_id' => 'id']);
+    }
 }
