@@ -16,6 +16,7 @@ use yii\helpers\Url;
  */
 class SignupForm extends Model
 {
+    public $layout = "login";
     /**
      * @var
      */

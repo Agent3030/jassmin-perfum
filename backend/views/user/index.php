@@ -14,12 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php //$this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
     'modelClass' => 'User',
 ]), ['create'], ['class' => 'btn btn-success']) ?>
+
+        <?php echo Html::a(Yii::t('backend', 'Sent Authorization Email'),['create-by-email'], ['class' => 'btn btn-success']); ?>
     </p>
 
     <?php echo GridView::widget([
@@ -34,6 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'enum' => User::statuses(),
                 'filter' => User::statuses()
+            ],
+            [
+                'attribute' => 'Partner name',
+                'value'  => function($model) {
+                    return $model->partner ? $model->partner->short_name : null;
+                }
             ],
             'created_at:datetime',
             'logged_at:datetime',

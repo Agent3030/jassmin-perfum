@@ -27,15 +27,17 @@ $this->beginContent('@frontend/modules/shop/views/layouts/_clear.php')
                     <div class="col-md-3"></div>
                     <div class="col-md-9">
                         <nav class="main-menu">
-                            <ul>
-                                <li><a href="#">На головну</a></li>
-                                <li><a href="#">Акції</a></li>
-                                <li><a href="#">Кошик</a></li>
-                                <li><a href="#">Кабінет користувача</a></li>
-                                <li><a href="#">Фінанси</a></li>
-                                <li><a href="#">Контакти</a></li>
-                            </ul>
-                        </nav>
+                            <?php echo Nav::widget([
+                                'items' => [
+                                    ['label' => Html::encode('На головну'), 'url' => ['/site/index/']],
+                                    ['label' => Html::encode('Акції'), 'url' => ['/shop/actions/index/']],
+                                    ['label' => Html::encode('Кошик'), 'url' => ['/shop/cart/index/']],
+                                    ['label' => Html::encode('Кабінет Користувача'), 'url' => ['/shop/cabinet/index/']],
+                                    ['label' => Html::encode('Фінанси'), 'url' => ['/shop/finance/index/']],
+                                    ['label' => Html::encode('Контакти'), 'url' => ['/site/contacts']],
+                                ]
+                            ]); ?>
+                         </nav>
                     </div>
                 </div>
             </div>
@@ -208,11 +210,10 @@ $this->beginContent('@frontend/modules/shop/views/layouts/_clear.php')
                 </aside>
             </div>
             <div class="col-md-9">
-                <div class=""
+                <div class="content">
+                    <?php echo $content ?>
+                </div>
             </div>
-
-        <?php echo $content ?>
-
         </div>
     </section>
     <footer class="footer">
@@ -257,7 +258,7 @@ $this->beginContent('@frontend/modules/shop/views/layouts/_clear.php')
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="cert-wrapper"><?=Html::img('../img/certificate.png', ['class' => 'img-responsive'])?></div>
+                <div class="cert-wrapper"><?=Html::img('/img/certificate.png', ['class' => 'img-responsive'])?></div>
             </div>
         </div>
         <div class="container">

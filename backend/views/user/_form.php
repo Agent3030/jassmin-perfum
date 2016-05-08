@@ -12,13 +12,19 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="user-form">
-
+    <?php print_r($model); ?>
     <?php $form = ActiveForm::begin(); ?>
-        <?php echo $form->field($model, 'username') ?>
-        <?php echo $form->field($model, 'email') ?>
-        <?php echo $form->field($model, 'password')->passwordInput() ?>
-        <?php echo $form->field($model, 'status')->dropDownList(User::statuses()) ?>
-        <?php echo $form->field($model, 'roles')->checkboxList($roles) ?>
+        <?php echo $form->field($model->getModel('user'), 'username') ?>
+        <?php echo $form->field($model->getModel('profile'), 'firstname') ?>
+        <?php echo $form->field($model->getModel('user'), 'email') ?>
+        <?php echo $form->field($model->getModel('user'), 'password')->passwordInput() ?>
+        <?php echo $form->field($model->getModel('user'), 'status')->dropDownList(User::statuses()) ?>
+        <?php echo $form->field($model->getModel('profile'), 'partner_id')->dropDownList(\yii\helpers\ArrayHelper::map(
+                $model->getModel('partners'),
+                'id',
+                'short_name'
+            ), ['prompt'=>'Enter Your Company']) ?>
+        <?php echo $form->field($model->getModel('user'), 'roles')->checkboxList($roles) ?>
         <div class="form-group">
             <?php echo Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
         </div>

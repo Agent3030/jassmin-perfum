@@ -27,6 +27,7 @@ use yii\widgets\ActiveForm;
 class SignInController extends \yii\web\Controller
 {
 
+    public $layout = "login";
     /**
      * @return array
      */

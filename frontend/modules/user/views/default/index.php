@@ -47,6 +47,15 @@ $this->title = Yii::t('frontend', 'User Settings')
 
     <?php echo $form->field($model->getModel('account'), 'password_confirm')->passwordInput() ?>
 
+    <?php echo $form->field($model->getModel('profile'), 'partner_id')->dropDownList(\yii\helpers\ArrayHelper::map(
+        common\models\Partners::find()->all(),
+        'id',
+        'short_name'
+    ), ['prompt'=>'Select Your Company']) ?>
+
+
+
+
     <div class="form-group">
         <?php echo Html::submitButton(Yii::t('frontend', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>

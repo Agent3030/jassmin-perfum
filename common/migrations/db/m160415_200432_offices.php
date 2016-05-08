@@ -24,11 +24,27 @@ class m160415_200432_offices extends Migration
             'status' => $this->string(28)->notNull(),
 
         ], $tableOptions);
+
+        $this->createTable('{{%offices_i18}}', [
+            'id' => $this->primaryKey(),
+            'office_id'=>$this->Integer()->notNull(),
+            'region' => $this->string(128)->notNull(),
+            'city' =>  $this->string(128)->notNull(),
+            'street' => $this->string(128)->notNull(),
+            'status' => $this->string(28)->notNull(),
+
+        ], $tableOptions);
+
+        $this->addForeignKey('fk_officeI18_office', '{{%offices_i18}}', 'office_id', '{{%offices}}', 'id', 'cascade', 'cascade');
+
     }
 
     public function down()
     {
+        $this->dropForeignKey('fk_officeI18_office', '{{%offices_i18}}');
         $this->dropTable('{{%offices}}');
+        $this->dropTable('{{%offices_i18}}');
+
     }
 
     /*
@@ -42,3 +58,4 @@ class m160415_200432_offices extends Migration
     }
     */
 }
+

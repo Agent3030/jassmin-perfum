@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\Partners;
+use common\models\PartnersI18;
+use common\base\MultiModel;
 use Yii;
 use common\models\User;
-use backend\models\UserForm;
+use backend\models\UserEmailForm;
 use backend\models\search\UserSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -62,8 +65,19 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new UserForm();
-        $model->setScenario('create');
+
+        $userForm = new UserForm();
+        //$userForm->setScenario('create');
+        $partners = new Partners();
+        $partnersI18 = new PartnersI18();
+        $model = new MultiModel([
+            'models' => [
+                'user' => $userForm,
+                'partners' => $partners,
+                'partnersI18' => $partnersI18,
+                'profile' => Yii::$app->user->identity->userProfile
+            ]
+        ]);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
@@ -71,6 +85,37 @@ class UserController extends Controller
         return $this->render('create', [
             'model' => $model,
             'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
+        ]);
+    }
+
+    public function actionCreateByEmail()
+    {
+        $model = new UserEmailForm();
+        if ($model->load(Yii::$app->request->post())) {
+            $user = $model->signup();
+            if ($user) {
+                 Yii::$app->getSession()->setFlash('alert', [
+                        'body' => Yii::t(
+                            'backend',
+                            'Your account has been successfully created. Check your email for further instructions.'
+                        ),
+                        'options' => ['class'=>'alert-success']
+                    ]);
+
+                }
+                return $this->goHome();
+            }
+
+
+        //$userForm->setScenario('create');
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('createByEmail', [
+            'model' => $model,
+
         ]);
     }
 

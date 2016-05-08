@@ -22,10 +22,24 @@ class m140703_123104_page extends Migration
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ], $tableOptions);
+
+        $this->createTable('{{%page_i18}}', [
+            'id' => $this->primaryKey(),
+            'page_id' => $this->integer(),
+            'language_id' => $this->integer(),
+            'title' => $this->string(512)->notNull(),
+            'body' => $this->text()->notNull(),
+        ], $tableOptions);
+
+        $this->addForeignKey('fk_pageI18_page', '{{%page_i18}}', 'page_id', '{{%page}}', 'id', 'cascade', 'cascade');
     }
 
     public function down()
     {
+        $this->dropForeignKey('fk_pageI18_page', '{{%page_i18}}');
         $this->dropTable('{{%page}}');
+        $this->dropTable('{{%page_i18}}');
     }
+
+
 }

@@ -14,6 +14,7 @@ class AccountForm extends Model
     public $password;
     public $password_confirm;
 
+
     private $user;
 
     public function setUser($user)

@@ -61,7 +61,7 @@ class Partners extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['short_name', 'reg_code', 'prop_form', 'isVAT', 'status_id', 'user_id'], 'required'],
+            [['short_name', 'reg_code', 'prop_form', 'isVAT', 'status_id'], 'required'],
             [['reg_code', 'isVAT', 'VAT_code', 'user_id', 'status_id', 'created_at', 'updated_at'], 'integer'],
             [['short_name', 'prop_form'], 'string', 'max' => 128],
             [['full_name'], 'string', 'max' => 1026],
@@ -97,7 +97,11 @@ class Partners extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(UsersToPartners::className(),['partner_id' => 'id']);
+        return $this->hasMany(User::className(),['id' => 'user_id']);
+    }
+    public function getUserProfile()
+    {
+        return $this->hasMany(Partners::className(),['id' => 'partner_id']);
     }
     public function getAttachements()
     {

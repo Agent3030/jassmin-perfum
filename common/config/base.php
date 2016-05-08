@@ -47,11 +47,16 @@ $config = [
 
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            //'useFileTransport' => true,
-            'messageConfig' => [
-                'charset' => 'UTF-8',
-                'from' => getenv('ADMIN_EMAIL')
-            ]
+            'viewPath' => '@frontend/mail',
+            'useFileTransport' => true,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => getenv('ADMIN_EMAIL'),
+                'password' => 'Zdlpdlg2',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
 
         'db'=>[

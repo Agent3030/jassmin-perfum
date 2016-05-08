@@ -51,12 +51,30 @@ class m140703_123803_article extends Migration
             'created_at' => $this->integer()
         ]);
 
+        $this->createTable('{{%article_i18}}', [
+            'id' => $this->primaryKey(),
+            'article_id' => $this->integer(),
+            'language_id' => $this->integer(),
+            'categoryI18_id'=>$this->integer(),
+            'title' => $this->string(512)->notNull(),
+            'body' => $this->text()->notNull(),
+        ], $tableOptions);
+
+        $this->createTable('{{%article_category_i18}}', [
+            'id' => $this->primaryKey(),
+            'article_category_id' => $this->integer(),
+            'language_id' => $this->integer(),
+            'title' => $this->string(512)->notNull(),
+            'parent_id' => $this->integer(),
+        ], $tableOptions);
+
         $this->addForeignKey('fk_article_attachment_article', '{{%article_attachment}}', 'article_id', '{{%article}}', 'id', 'cascade', 'cascade');
         $this->addForeignKey('fk_article_author', '{{%article}}', 'author_id', '{{%user}}', 'id', 'cascade', 'cascade');
         $this->addForeignKey('fk_article_updater', '{{%article}}', 'updater_id', '{{%user}}', 'id', 'set null', 'cascade');
         $this->addForeignKey('fk_article_category', '{{%article}}', 'category_id', '{{%article_category}}', 'id', 'cascade', 'cascade');
         $this->addForeignKey('fk_article_category_section', '{{%article_category}}', 'parent_id', '{{%article_category}}', 'id', 'cascade', 'cascade');
-
+        $this->addForeignKey('fk_articleI18_article', '{{%article_i18}}', 'article_id', '{{%article}}', 'id', 'cascade', 'cascade');
+        $this->addForeignKey('fk_article_category_I18_article_category', '{{%article_category_i18}}', 'article_category_id', '{{%article_category}}', 'id', 'cascade', 'cascade');
     }
 
     public function safeDown()
@@ -66,9 +84,16 @@ class m140703_123803_article extends Migration
         $this->dropForeignKey('fk_article_updater', '{{%article}}');
         $this->dropForeignKey('fk_article_category', '{{%article}}');
         $this->dropForeignKey('fk_article_category_section', '{{%article_category}}');
+        $this->dropForeignKey('fk_articleI18_article', '{{%article_i18}}');
+        $this->dropForeignKey('fk_article_category_I18_article_category', '{{%article_category_i18}}');
 
+        $this->dropTable('{{%article_category_i18}}');
+        $this->dropTable('{{%article_i18}}');
         $this->dropTable('{{%article_attachment}}');
         $this->dropTable('{{%article}}');
         $this->dropTable('{{%article_category}}');
     }
 }
+
+
+

@@ -10,9 +10,12 @@ use trntv\filekit\actions\UploadAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use common\models\Partners;
+use common\models\PartnersI18;
 
 class DefaultController extends Controller
 {
+    public $layout = "login";
     /**
      * @return array
      */
@@ -60,10 +63,15 @@ class DefaultController extends Controller
     {
         $accountModel = new AccountForm();
         $accountModel->setUser(Yii::$app->user->identity);
+        $partners = new Partners();
+        $partnersI18 = new PartnersI18();
+        print_r(Yii::$app->user->identity->userProfile);
 
         $model = new MultiModel([
             'models' => [
                 'account' => $accountModel,
+                'partners' => $partners,
+                'partnersI18' => $partnersI18,
                 'profile' => Yii::$app->user->identity->userProfile
             ]
         ]);
