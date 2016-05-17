@@ -156,6 +156,30 @@ class UserController extends Controller
     }
 
 
+    public function actionCreateByEmail()
+    {
+        $model = new UserEmailForm();
+        if ($model->load(Yii::$app->request->post())) {
+            $user = $model->signup();
+            if ($user) {
+                Yii::$app->getSession()->setFlash('alert', [
+                    'body' => Yii::t(
+                        'backend',
+                        'Your account has been successfully created. Check your email for further instructions.'
+                    ),
+                    'options' => ['class'=>'alert-success']
+                ]);
+            }
+            return $this->goHome();
+        }
+        //$userForm->setScenario('create');
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+        return $this->render('createByEmail', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * Deletes an existing User model.

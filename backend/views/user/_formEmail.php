@@ -12,7 +12,7 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="user-form">
-  
+
     <?php $form = ActiveForm::begin(); ?>
 
         <?php echo $form->field($model, 'email') ?>
