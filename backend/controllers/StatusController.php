@@ -6,6 +6,7 @@ use common\models\StatusesI18;
 use Yii;
 use common\models\Statuses;
 use backend\models\search\StatusSearch;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,7 +66,7 @@ class StatusController extends Controller
         $modelI18 = new StatusesI18();
 
         if ($model->load(Yii::$app->request->post()) && $modelI18->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$modelI18])) {
-
+        //if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->save(false);
 
             $modelI18->status_id = $model->id;
@@ -75,7 +76,7 @@ class StatusController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'modelUk'=> $modelI18,
+                'modelI18'=> $modelI18,
 
             ]);
         }
@@ -91,12 +92,20 @@ class StatusController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelI18 = $model ->statusesI18;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $modelI18->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$modelI18])) {
+            //if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->save(false);
+
+            $modelI18->save(false);
+
+            return $this->redirect(['index']);
+
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelI18' =>$modelI18
             ]);
         }
     }

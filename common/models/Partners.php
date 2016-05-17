@@ -47,7 +47,7 @@ class Partners extends \yii\db\ActiveRecord
                 'class' => UploadBehavior::className(),
                 'attribute' => 'partner_attachements',
                 'multiple' => true,
-                'uploadRelation' => 'partnerAttachements',
+                'uploadRelation' => 'attachements',
                 'pathAttribute' => 'path',
                 'baseUrlAttribute' => 'base_url',
                 'orderAttribute' => 'order',
@@ -61,7 +61,7 @@ class Partners extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['short_name', 'reg_code', 'prop_form', 'isVAT', 'status_id'], 'required'],
+            [['short_name', 'reg_code', 'prop_form', 'isVAT'], 'required'],
             [['reg_code', 'isVAT', 'VAT_code', 'user_id', 'status_id', 'created_at', 'updated_at'], 'integer'],
             [['short_name', 'prop_form'], 'string', 'max' => 128],
             [['full_name'], 'string', 'max' => 1026],
@@ -101,19 +101,19 @@ class Partners extends \yii\db\ActiveRecord
     }
     public function getUserProfile()
     {
-        return $this->hasMany(Partners::className(),['id' => 'partner_id']);
+        return $this->hasMany(Partners::className(),['partner_id' => 'id']);
     }
     public function getAttachements()
     {
-        return $this->hasOne(PartnersAttachements::className(),['partner_id' => 'id']);
+        return $this->hasMany(PartnersAttachements::className(),['partner_id' => 'id']);
     }
 
     public function getAdresses()
     {
         return $this->hasMany(Adresses::className(),['partner_id' => 'id']);
     }
-    public function getAdressesI18()
+   public function getAdressesI18()
     {
-        return $this->hasOne(AdressesI18::className(),['partner_id' => 'id']);
+        return $this->hasOne(AdressesI18::className(),['id' => 'partner_id']);
     }
 }

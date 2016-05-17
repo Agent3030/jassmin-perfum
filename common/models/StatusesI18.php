@@ -30,7 +30,8 @@ class StatusesI18 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['lang_id', 'status_id', 'status_name'], 'required'],
+            [[ 'status_name'], 'required'],
+            [['status_name'], 'unique'],
             [['lang_id', 'status_id'], 'integer'],
             [['status_name'], 'string', 'max' => 128]
         ];

@@ -159,6 +159,7 @@ $config = [
             'uk-UA'=>'Українська (Україна)',
         ],
         'googleApiKey' =>'AIzaSyA3U-QMacrEJzg-BzHoZHTBI3NPSU30HWM',
+        'newTime' => 24*60*60*12,
     ],
 ];
 

@@ -49,7 +49,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                                 ['label' => Yii::t('frontend', 'Home'), 'url' => ['/site/index']],
                                 ['label' => Yii::t('frontend', 'About'), 'url' => ['/page/view', 'slug'=>'about']],
                                 ['label' => Yii::t('frontend', 'Media'), 'url' => ['/page/view', 'slug'=>'media']],
-                                ['label' => Yii::t('frontend', 'Partners'), 'url' => ['/partners/index', 'slug'=>'partners']],
+                                ['label' => Yii::t('frontend', 'Partners'), 'url' => ['/partners/index']],
                                 ['label' => Yii::t('frontend', 'News'), 'url' => ['/article/index']],
                                 ['label' => Yii::t('frontend', 'Contacts'), 'url' => ['/site/contacts']],
                             ]

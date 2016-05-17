@@ -44,6 +44,7 @@ class User extends ActiveRecord implements IdentityInterface
     const EVENT_AFTER_SIGNUP = 'afterSignup';
     const EVENT_AFTER_LOGIN = 'afterLogin';
 
+
     /**
      * @inheritdoc
      */
@@ -109,7 +110,8 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_NOT_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statuses())],
-            [['username'],'filter','filter'=>'\yii\helpers\Html::encode']
+            [['username'],'filter','filter'=>'\yii\helpers\Html::encode'],
+
         ];
     }
 
@@ -235,6 +237,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_hash = Yii::$app->getSecurity()->generatePasswordHash($password);
     }
+
+
 
     /**
      * Returns user statuses list

@@ -4,21 +4,47 @@ namespace backend\controllers;
 
 use common\models\Partners;
 use common\models\PartnersI18;
+use common\models\UserToken;
+
 use common\base\MultiModel;
 use Yii;
 use common\models\User;
 use backend\models\UserEmailForm;
+use backend\models\UserForm;
 use backend\models\search\UserSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
+use Intervention\Image\ImageManagerStatic;
+use trntv\filekit\actions\DeleteAction;
+use trntv\filekit\actions\UploadAction;
+use yii\base\Model;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
 class UserController extends Controller
 {
+    public function actions()
+    {
+        return [
+            'avatar-upload' => [
+                'class' => UploadAction::className(),
+                'deleteRoute' => 'avatar-delete',
+                'on afterSave' => function ($event) {
+                    /* @var $file \League\Flysystem\File */
+                    $file = $event->file;
+                    $img = ImageManagerStatic::make($file->read())->fit(215, 215);
+                    $file->put($img->encode());
+                }
+            ],
+            'avatar-delete' => [
+                'class' => DeleteAction::className()
+            ]
+        ];
+    }
     public function behaviors()
     {
         return [
@@ -65,59 +91,33 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
+        $model = new userForm();
+        $profile = Yii::$app->user->identity->userProfile;
 
-        $userForm = new UserForm();
-        //$userForm->setScenario('create');
         $partners = new Partners();
         $partnersI18 = new PartnersI18();
-        $model = new MultiModel([
-            'models' => [
-                'user' => $userForm,
-                'partners' => $partners,
-                'partnersI18' => $partnersI18,
-                'profile' => Yii::$app->user->identity->userProfile
-            ]
-        ]);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
 
-        return $this->render('create', [
-            'model' => $model,
+        if  ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$profile])) {
+            $model->save();
+
+            $profile->locale = Yii::$app->language;
+            $profile->save(false);
+
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class'=>'alert-success'],
+                'body' => Yii::t('frontend', 'Your account has been successfully saved')
+            ]);
+            return $this->goHome();
+        }
+        return $this->render('create', ['model'=>$model,
+            'partners' => $partners,
+            'partnersI18' => $partnersI18,
+            'profile' => $profile,
             'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
         ]);
     }
 
-    public function actionCreateByEmail()
-    {
-        $model = new UserEmailForm();
-        if ($model->load(Yii::$app->request->post())) {
-            $user = $model->signup();
-            if ($user) {
-                 Yii::$app->getSession()->setFlash('alert', [
-                        'body' => Yii::t(
-                            'backend',
-                            'Your account has been successfully created. Check your email for further instructions.'
-                        ),
-                        'options' => ['class'=>'alert-success']
-                    ]);
 
-                }
-                return $this->goHome();
-            }
-
-
-        //$userForm->setScenario('create');
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('createByEmail', [
-            'model' => $model,
-
-        ]);
-    }
 
     /**
      * Updates an existing User model.
@@ -128,15 +128,34 @@ class UserController extends Controller
     {
         $model = new UserForm();
         $model->setModel($this->findModel($id));
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
 
+        $profile = $model->getModel()->userProfile;
+
+        $partners = new Partners();
+        $partnersI18 = new PartnersI18();
+
+        if  ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$profile])) {
+            $model->save();
+
+            $profile->locale = Yii::$app->language;
+            $profile->save(false);
+
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class'=>'alert-success'],
+                'body' => Yii::t('frontend', 'Your account has been successfully saved')
+            ]);
+            return $this->goHome();
+        }
         return $this->render('update', [
-            'model' => $model,
+            'model'=>$model,
+            'partners' => $partners,
+            'partnersI18' => $partnersI18,
+            'profile' => $profile,
             'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
         ]);
     }
+
+
 
     /**
      * Deletes an existing User model.

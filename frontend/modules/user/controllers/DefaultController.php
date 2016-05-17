@@ -10,12 +10,13 @@ use trntv\filekit\actions\UploadAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\base\Model;
 use common\models\Partners;
 use common\models\PartnersI18;
 
 class DefaultController extends Controller
 {
-    public $layout = "login";
+    public $layout = "cabinet";
     /**
      * @return array
      */
@@ -61,28 +62,35 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $accountModel = new AccountForm();
-        $accountModel->setUser(Yii::$app->user->identity);
-        $partners = new Partners();
-        $partnersI18 = new PartnersI18();
-        print_r(Yii::$app->user->identity->userProfile);
+        $model = new AccountForm();
+        $model->setUser(Yii::$app->user->identity);
+        $profile = Yii::$app->user->identity->userProfile;
+        //$partners = new Partners();
+        //$partnersI18 = new PartnersI18();
 
-        $model = new MultiModel([
+       /* $model = new MultiModel([
             'models' => [
                 'account' => $accountModel,
                 'partners' => $partners,
                 'partnersI18' => $partnersI18,
                 'profile' => Yii::$app->user->identity->userProfile
             ]
-        ]);
+        ]);*/
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if  ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$profile])) {
+            $model->save(false);
+
+            $profile->locale = Yii::$app->language;
+            $profile->save(false);
+
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class'=>'alert-success'],
                 'body' => Yii::t('frontend', 'Your account has been successfully saved')
             ]);
-            return $this->refresh();
+            return $this->goHome();
         }
-        return $this->render('index', ['model'=>$model]);
+        return $this->render('index', ['model'=>$model,
+                                       'profile' => $profile
+                                                ]);
     }
 }

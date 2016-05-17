@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
 
 
                         <div class="form-group">
-                            <?= Html::a('Create', ['/brand/create'], ['class' => 'btn btn-success']) ?>
+                            <?= Html::a('Create Brand', ['/brand/create'], ['class' => 'btn btn-success']) ?>
                         </div>
 
 
@@ -88,18 +88,20 @@ use yii\widgets\ActiveForm;
 
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <?= Html::a('Create', ['/bulk/create'], ['class' => 'btn btn-success']) ?>
+                    <div class="form-group button-block">
+
+                        <?= Html::a('Create Bulk', ['/bulk/create'], ['class' => 'btn btn-success']) ?>
+
                     </div>
 
                 </div>
             </div>
             <div class = "row">
                 <div class = "col-md-3">
-                    <?= $form->field($model, 'status')->checkbox(['value' => false]); ?>
+                    <?= $form->field($model, 'status')->checkbox(); ?>
                 </div>
                 <div class = "col-md-3">
-                    <?= $form->field($model, 'is_available')->checkbox(); ?>
+                    <?= $form->field($model, 'is_available')->checkbox(['value' =>true]); ?>
                 </div>
                 <div class = "col-md-3">
                     <?= $form->field($model, 'is_new')->checkbox(); ?>

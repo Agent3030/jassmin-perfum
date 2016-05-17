@@ -30,7 +30,7 @@ class AdressesI18 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['adress_id', 'partnerI18_id','language_id', 'region', 'city', 'street'], 'required'],
+            [['region', 'city', 'street'], 'required'],
             [['adress_id', 'partnerI18_id', 'language_id'], 'integer'],
             [['region', 'city', 'street'], 'string', 'max' => 128]
         ];

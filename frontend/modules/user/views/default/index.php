@@ -17,41 +17,44 @@ $this->title = Yii::t('frontend', 'User Settings')
 
     <h2><?php echo Yii::t('frontend', 'Profile settings') ?></h2>
 
-    <?php echo $form->field($model->getModel('profile'), 'picture')->widget(
+    <?php echo $form->field($profile, 'picture')->widget(
         Upload::classname(),
         [
             'url' => ['avatar-upload']
         ]
     )?>
 
-    <?php echo $form->field($model->getModel('profile'), 'firstname')->textInput(['maxlength' => 255]) ?>
+    <?php echo $form->field($profile, 'firstname')->textInput(['maxlength' => 255]) ?>
 
-    <?php echo $form->field($model->getModel('profile'), 'middlename')->textInput(['maxlength' => 255]) ?>
+    <?php echo $form->field($profile, 'middlename')->textInput(['maxlength' => 255]) ?>
 
-    <?php echo $form->field($model->getModel('profile'), 'lastname')->textInput(['maxlength' => 255]) ?>
+    <?php echo $form->field($profile, 'lastname')->textInput(['maxlength' => 255]) ?>
 
-    <?php echo $form->field($model->getModel('profile'), 'locale')->dropDownlist(Yii::$app->params['availableLocales']) ?>
+    <?php echo $form->field($profile, 'position')->textInput(['maxlength' => 255]) ?>
 
-    <?php echo $form->field($model->getModel('profile'), 'gender')->dropDownlist([
+
+    <?php echo $form->field($profile, 'locale')->dropDownlist(Yii::$app->params['availableLocales']) ?>
+
+    <?php echo $form->field($profile, 'gender')->dropDownlist([
         \common\models\UserProfile::GENDER_FEMALE => Yii::t('frontend', 'Female'),
         \common\models\UserProfile::GENDER_MALE => Yii::t('frontend', 'Male')
     ], ['prompt' => '']) ?>
 
     <h2><?php echo Yii::t('frontend', 'Account Settings') ?></h2>
 
-    <?php echo $form->field($model->getModel('account'), 'username') ?>
+    <?php echo $form->field($model, 'username') ?>
 
-    <?php echo $form->field($model->getModel('account'), 'email') ?>
+    <?php echo $form->field($model, 'email') ?>
 
-    <?php echo $form->field($model->getModel('account'), 'password')->passwordInput() ?>
+    <?php echo $form->field($model, 'password')->passwordInput() ?>
 
-    <?php echo $form->field($model->getModel('account'), 'password_confirm')->passwordInput() ?>
+    <?php echo $form->field($model, 'password_confirm')->passwordInput() ?>
 
-    <?php echo $form->field($model->getModel('profile'), 'partner_id')->dropDownList(\yii\helpers\ArrayHelper::map(
+    <?php /*echo $form->field($model->getModel('profile'), 'partner_id')->dropDownList(\yii\helpers\ArrayHelper::map(
         common\models\Partners::find()->all(),
         'id',
         'short_name'
-    ), ['prompt'=>'Select Your Company']) ?>
+    ), ['prompt'=>'Select Your Company']) */?>
 
 
 

@@ -11,7 +11,7 @@ use yii\bootstrap\Nav;
  */$this->beginContent('@frontend/modules/user/views/layouts/_clear.php')
 
 ?>
-    <header class = "page-header">
+<header class = "page-header">
     <div class="header-top">
         <div class="container-fluid">
             <div class="col-md-3">

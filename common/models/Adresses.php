@@ -33,7 +33,7 @@ class Adresses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['partner_id', 'region', 'city', 'street', 'house', 'tel', 'email','status'], 'required'],
+            [['region', 'city', 'street', 'house'], 'required'],
             [['partner_id', 'house', 'appartment', 'index', 'status'], 'integer'],
             [['region', 'city', 'street'], 'string', 'max' => 128],
 

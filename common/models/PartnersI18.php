@@ -31,7 +31,7 @@ class PartnersI18 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['partner_id', 'language_id', 'short_name', 'prop_form'], 'required'],
+            [['short_name', 'prop_form'], 'required'],
             [['partner_id', 'language_id'], 'integer'],
             [['short_name', 'prop_form'], 'string', 'max' => 128],
             [['full_name'], 'string', 'max' => 1026]

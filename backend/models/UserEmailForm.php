@@ -120,12 +120,12 @@ class UserEmailForm extends Model
                 'subject' => Yii::t('backend', 'Activation email'),
                 'view' => 'activation',
                 'params' => [
-                    'url' => Url::to(['@frontend/user/sign-in/activation', 'token' => $token->token], true)
+                    'url' => Url::to([Yii::$app->urlManagerFrontend->createAbsoluteUrl('user/sign-in/activation'), 'token' => $token->token], 'http')
                 ]
             ]));
 
 
-            print_r($model);
+
 
 
             return $model;

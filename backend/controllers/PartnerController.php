@@ -5,6 +5,8 @@ namespace backend\controllers;
 use common\models\PartnersI18;
 use Yii;
 use common\models\Partners;
+use common\models\Adresses;
+use common\models\AdressesI18;
 use backend\models\search\PartnerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,24 +66,39 @@ class PartnerController extends Controller
     {
         $model = new Partners();
         $modelUk = new PartnersI18();
-        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post())&& Model::validateMultiple([$model,$modelUk])) {
-            $model->isVAT = 1;
-            $model->save(false);
+        $adresses = new Adresses();
+        $adressesUk = new AdressesI18();
 
+
+        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post()) &&
+            $adresses->load(Yii::$app->request->post()) && $adressesUk->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $modelUk, $adresses, $adressesUk])) {
+
+            $model->save(false);
             $modelUk->partner_id = $model->id;
             $modelUk->save(false);
+            $adresses->partner_id = $model->id;
+            $adresses->status = 1;
+            $adresses->save(false);
+            $adressesUk->adress_id = $adresses->id;
+            $adressesUk->partnersI18 = $modelUk->id;
+            $adressesUk->save(false);
+
 
             return $this->redirect(['index']);
         } else {
+            $model->isVAT = true;
             return $this->render('create', [
                 'model' => $model,
-                'modelUk'=> $modelUk,
-
-
+                'modelUk' => $modelUk,
+                'adresses' => $adresses,
+                'adressesUk' => $adressesUk
             ]);
         }
 
+
     }
+
+
 
     /**
      * Updates an existing Partners model.
@@ -92,20 +109,28 @@ class PartnerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelUk = PartnersI18::getPartnerI18ByLangAndPartnerId($model->id);
+        $modelUk = $model->partnersI18;
+        $adresses = $model->adresses;
+        $adressesUk = $adresses->adressesI18;
+        print_r($adresses);
 
-
-        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $modelUk])) {
-
+        if ($model->load(Yii::$app->request->post()) && $modelUk->load(Yii::$app->request->post()) &&
+            $adresses->load(Yii::$app->request->post()) && $adressesUk->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $modelUk, $adresses, $adressesUk])) {
 
             $model->save(false);
             $modelUk->save(false);
+            $adresses->save(false);
+            $adressesUk->save(false);
+
+
             return $this->redirect(['index']);
         } else {
+            $model->isVAT = true;
             return $this->render('create', [
                 'model' => $model,
                 'modelUk' => $modelUk,
-
+                'adresses' => $adresses,
+                'adressesUk' => $adressesUk
             ]);
         }
     }

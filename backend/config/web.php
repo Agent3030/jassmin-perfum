@@ -76,6 +76,12 @@ $config = [
             ],
             [
                 'controllers'=>['user'],
+                'allow' => true,
+                'roles' => ['user'],
+                'actions' =>['activation']
+            ],
+            [
+                'controllers'=>['user'],
                 'allow' => false,
             ],
             [

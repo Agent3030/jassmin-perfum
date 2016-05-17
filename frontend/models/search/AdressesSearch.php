@@ -42,7 +42,6 @@ class AdressesSearch extends Adresses
     public function search($params)
     {
         $query = Adresses::find()->with(['partners']);
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

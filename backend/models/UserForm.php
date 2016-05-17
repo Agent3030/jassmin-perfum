@@ -15,6 +15,7 @@ class UserForm extends Model
     public $username;
     public $email;
     public $password;
+    public $password_confirm;
     public $status;
     public $roles;
 
@@ -44,8 +45,11 @@ class UserForm extends Model
                 }
             }],
 
-            ['password', 'required', 'on'=>'create'],
-            ['password', 'string', 'min' => 6],
+            ['password', 'string'],
+            ['password_confirm', 'required', 'when' => function($model) {
+                return !empty($model->password);
+            }],
+            ['password_confirm', 'compare', 'compareAttribute' => 'password', 'skipOnEmpty' => false],
 
             [['status'], 'integer'],
             [['roles'], 'each',
@@ -67,6 +71,7 @@ class UserForm extends Model
             'email' => Yii::t('common', 'Email'),
             'status' => Yii::t('common', 'Status'),
             'password' => Yii::t('common', 'Password'),
+            'password_confirm' => Yii::t('common', 'Confirm Password'),
             'roles' => Yii::t('common', 'Roles')
         ];
     }

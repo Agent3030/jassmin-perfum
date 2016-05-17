@@ -13,6 +13,7 @@ use yii\web\JsExpression;
 <div class="partners-form">
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php //print_r($modelUk) ?>
 
 
     <div class = "row">
@@ -47,8 +48,16 @@ use yii\web\JsExpression;
     <?php echo $form->field($modelUk, 'language_id')->hiddenInput(['value' => 3]); ?>
     </div>
 
+    <div class = "row">
+        <div class="col-md-6">
+            <?php echo $form->field($model, 'user_id')->dropDownList(\yii\helpers\ArrayHelper::map(
+                common\models\User::find()->all(),
+                'id',
+                'username'
+            ), ['prompt'=>'Select User']) ?>
 
-
+        </div>
+    </div>
 
 
     <div class = "row">
@@ -59,10 +68,10 @@ use yii\web\JsExpression;
 
     <div class = "row">
         <div class="col-md-3">
-    <?php echo $form->field($model, 'isVAT')->radioList(['0'=>'without VAT','1' => 'with VAT']);?>
+    <?php echo $form->field($model, 'isVAT')->checkbox();?>
         </div>
         <div class = "col-md-6">
-            <?php echo $form->field($model, 'VAT_code', ['options' => ['value'=> '0']])->textInput() ?>
+            <?php echo $form->field($model, 'VAT_code')->textInput(['value'=> '0']) ?>
         </div>
     </div>
 
@@ -71,7 +80,7 @@ use yii\web\JsExpression;
             <?php echo $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(
                 common\models\Statuses::find()->all(),
                 'id',
-                'brand_name'
+                'status_name'
             ), ['prompt'=>'Select Status']) ?>
 
         </div>
@@ -102,11 +111,54 @@ use yii\web\JsExpression;
         </div>
 
     </div>
-
-
-
+    <div class = "row">
+        <div class = "col-md-6">
+            <?php echo $form->field($adresses, 'region')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class = "col-md-6">
+            <?php echo $form->field($adressesUk, 'region')->textInput(['maxlength' => true]) ?>
+        </div>
     </div>
+
+    <div class = "row">
+        <div class = "col-md-6">
+            <?php echo $form->field($adresses, 'city')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class = "col-md-6">
+            <?php echo $form->field($adressesUk, 'city')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class = "col-md-6">
+            <?php echo $form->field($adresses, 'street')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class = "col-md-6">
+            <?php echo $form->field($adressesUk, 'street')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
+    <div class = "hidden">
+        <?php echo $form->field($adressesUk, 'language_id')->hiddenInput(['value' => 3]); ?>
+    </div>
+
+    <div class = "row">
+        <div class = "col-md-6">
+            <?php echo $form->field($adresses, 'house')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class = "col-md-6">
+            <?php echo $form->field($adresses, 'appartment')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class = "col-md-6">
+            <?php echo $form->field($adresses, 'index')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
+
+
+
 </div>
+
 
 
 
@@ -117,13 +169,24 @@ use yii\web\JsExpression;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
 
+
 <?php $js = <<<JS
-    jQuery("input[type='radio']:checked").val() === "0" ? jQuery('.field-partners-vat_code').hide() : jQuery('.field-partners-vat_code').show();
-    var a = $('.radio label input[name = "Partners[isVAT]"]:checked').val();
-    console.log(a);
+   // jQuery("input[type='radio']:checked").val() === "0" ? jQuery('#partners-vat_code').hide() : ;
+    //console.log(jQuery("#partners-isvat").val());
+    jQuery('.checkbox').on('change', ':checkbox', function() {
+       var checkState = $(this)
+       if(checkState.is(':checked')) {
+
+        jQuery('.field-partners-vat_code').show()
+
+       } else {
+            jQuery('#partners-vat_code').val(0);
+            jQuery('.field-partners-vat_code').hide();
+       }
+
+    });
 
 
 JS;

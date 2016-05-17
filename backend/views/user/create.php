@@ -1,4 +1,11 @@
 <?php
+
+
+use yii\helpers\ArrayHelper;
+
+
+?>
+<?php
 /* @var $this yii\web\View */
 /* @var $model backend\models\UserForm */
 /* @var $roles yii\rbac\Role[] */
@@ -11,8 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-create">
 
     <?php echo $this->render('_form', [
-        'model' => $model,
-        'roles' => $roles
+        'model'=>$model,
+        'partners' => $partners,
+        'partnersI18' => $partnersI18,
+        'profile' => $profile,
+        'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
     ]) ?>
 
 </div>

@@ -1,11 +1,11 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\search\PartnerSearch */
-/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model frontend\modules\user\models\search\PartnerSearch */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="partners-search">
@@ -15,15 +15,15 @@ use yii\bootstrap\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?php //echo $form->field($model, 'id') ?>
+    <?php// $form->field($model, 'id') ?>
 
-    <?php echo $form->field($model, 'short_name') ?>
+    <?= $form->field($model, 'short_name') ?>
 
-    <?php //echo $form->field($model, 'full_name') ?>
+    <?php// $form->field($model, 'full_name') ?>
 
-    <?php echo $form->field($model, 'reg_code') ?>
+    <?= $form->field($model, 'reg_code') ?>
 
-    <?php //echo $form->field($model, 'prop_form') ?>
+    <?php// $form->field($model, 'prop_form') ?>
 
     <?php // echo $form->field($model, 'isVAT') ?>
 
@@ -38,8 +38,8 @@ use yii\bootstrap\ActiveForm;
     <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
-        <?php echo Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?php echo Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('frontend', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('frontend', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

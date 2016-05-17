@@ -7,7 +7,9 @@ use common\models\Adresses;
 use common\models\AdressesI18;
 use common\models\Languages;
 use frontend\components\GoogleMaps\GoogleMaps;
-use frontend\models\search;
+use frontend\models\search\AdressesSearch;
+use frontend\models\search\AdressesI18Search;
+
 use yii\data\ActiveDataProvider;
 
 use Yii;
@@ -24,10 +26,11 @@ class PartnersController extends \yii\web\Controller
 
 
 
-        if ($lang->status == true) {
-            $searchModel = new search\AdressesSearch();
+        if ($lang->status == 1) {
+            $searchModel = new AdressesSearch();
             $dataProvider = $searchModel->search([Yii::$app->request->queryParams]);
             $models = $dataProvider->models;
+
 
             foreach ($models as $model) {
 
@@ -44,10 +47,10 @@ class PartnersController extends \yii\web\Controller
 
 
         } else {
-            $searchModel = new search\AdressesI18Search();
+            $searchModel = new AdressesI18Search();
             $dataProvider = $searchModel->search([Yii::$app->request->queryParams]);
             $models = $dataProvider->models;
-            //print_r($models);
+
 
 
 
@@ -80,11 +83,11 @@ class PartnersController extends \yii\web\Controller
 
 
 
-            if ($lang->status == true) {
-                $searchModel = new search\AdressesSearch();
+            if ($lang->status == 1) {
+                $searchModel = new AdressesSearch();
                 $dataProvider = $searchModel->search(['AdressesSearch' => Yii::$app->request->queryParams]);
                 $models = $dataProvider->models;
-                //print_r($models);
+
 
 
 
@@ -103,7 +106,7 @@ class PartnersController extends \yii\web\Controller
 
 
             } else {
-                $searchModel = new search\AdressesI18Search();
+                $searchModel = new AdressesI18Search();
                 $dataProvider = $searchModel->search(['AdressesI18Search' => Yii::$app->request->queryParams]);
                 $models = $dataProvider->models;
 

@@ -4,16 +4,16 @@
  * @var $model common\models\Article
  */
 use yii\helpers\Html;
-//use Yii;
+use Yii;
 
 ?>
-<?php //print_r($model->partners);?>
-<?php if ((Yii::$app->language == 'en-US')):?>
+
+<?php if (Yii::$app->language === 'en-US'):?>
 
     <div class = "col-md-3">
         <div class = "partner-adress">
             <div class = "name">
-                <h4></span><?=Html::encode($model->partners->full_name)?></h4>
+                <h4><?=Html::encode($model->partners->full_name)?></h4>
             </div>
             <div class = "adress">
                 <p><span class = "head"><?=Html::encode('city: ')?> </span><?=Html::encode($model->city)?></p>
@@ -28,6 +28,8 @@ use yii\helpers\Html;
 
 
     <?php else: ?>
+
+
 
     <div class = "col-md-3">
         <div class = "partner-adress">

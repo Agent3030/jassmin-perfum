@@ -164,7 +164,7 @@ class SignInController extends \yii\web\Controller
             'options' => ['class'=>'alert-success']
         ]);
 
-        return $this->goHome();
+        return $this->redirect(Yii::$app->urlManager->createUrl('/user/default/index'));
     }
 
     /**

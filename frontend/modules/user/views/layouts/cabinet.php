@@ -1,16 +1,17 @@
 <?php
-use yii\bootstrap\Nav;
+
 use yii\helpers\Html;
 use rmrevin\yii\fontawesome\FA;
+use yii\bootstrap\Nav;
 /**
  * Created by PhpStorm.
  * User: dzozulya
- * Date: 02.04.16
- * Time: 21:24
- */
-$this->beginContent('@frontend/views/layouts/_clear.php')
+ * Date: 02.05.16
+ * Time: 21:42
+ */$this->beginContent('@frontend/modules/user/views/layouts/_clear.php')
+
 ?>
-<header class = "partners-header">
+<header class = "page-header">
     <div class="header-top">
         <div class="container-fluid">
             <div class="col-md-3">
@@ -48,7 +49,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                             ['label' => Yii::t('frontend', 'Home'), 'url' => ['/site/index']],
                             ['label' => Yii::t('frontend', 'About'), 'url' => ['/page/view', 'slug'=>'about']],
                             ['label' => Yii::t('frontend', 'Media'), 'url' => ['/page/view', 'slug'=>'media']],
-                            ['label' => Yii::t('frontend', 'Partners'), 'url' => ['/partners/index']],
+                            ['label' => Yii::t('frontend', 'Partners'), 'url' => ['/partners/index', 'slug'=>'partners']],
                             ['label' => Yii::t('frontend', 'News'), 'url' => ['/article/index']],
                             ['label' => Yii::t('frontend', 'Contacts'), 'url' => ['/site/contacts']],
                         ]
@@ -58,9 +59,25 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
         </div>
     </div>
 </header>
-<section class = "partners-content">
+<section class = "page-content">
     <div class = "container-fluid">
-        <?php echo $content ?>
+        <div class = "col-md-2">
+            <nav class ="cabinet-nav">
+                <?php echo Nav::widget([
+                    'items' => [
+                        ['label' => Yii::t('frontend', 'Account'), 'url' => ['/user/default/index']],
+                        ['label' => Yii::t('frontend', 'Company'), 'url' => ['/user/partner/index']],
+                        ], 'options' => ['class' =>'nav-pills nav-stacked'],
+                ]); ?>
+            </nav>
+
+        </div>
+        <div class = "col-md-10">
+            <div class = "cabinet-content" id ="cabinet">
+                <?php echo $content ?>
+            </div>
+        </div>
+
     </div>
 </section>
 

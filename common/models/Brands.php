@@ -30,6 +30,7 @@ class Brands extends \yii\db\ActiveRecord
     {
         return [
             [['brand_name'], 'required'],
+            [['brand_name'], 'unique'],
             [['status'], 'integer'],
             [['brand_name'], 'string', 'max' => 128]
         ];
