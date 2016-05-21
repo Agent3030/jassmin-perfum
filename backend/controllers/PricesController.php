@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Products;
-use backend\models\search\ProductSearch;
+use common\models\Prices;
+use backend\models\search\PricesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProductController implements the CRUD actions for Products model.
+ * PricesController implements the CRUD actions for Prices model.
  */
-class ProductController extends Controller
+class PricesController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class ProductController extends Controller
     }
 
     /**
-     * Lists all Products models.
+     * Lists all Prices models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new PricesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +42,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Displays a single Products model.
+     * Displays a single Prices model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +54,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Creates a new Products model.
+     * Creates a new Prices model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Products();
+        $model = new Prices();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,7 +72,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Updates an existing Products model.
+     * Updates an existing Prices model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +91,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletes an existing Products model.
+     * Deletes an existing Prices model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +104,15 @@ class ProductController extends Controller
     }
 
     /**
-     * Finds the Products model based on its primary key value.
+     * Finds the Prices model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Products the loaded model
+     * @return Prices the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Products::findOne($id)) !== null) {
+        if (($model = Prices::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

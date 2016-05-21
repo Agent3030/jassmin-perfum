@@ -56,4 +56,8 @@ class Statuses extends \yii\db\ActiveRecord
     {
         return $this->hasOne(StatusesI18::className(),['status_id' => 'id']);
     }
+    public function getPartner()
+    {
+        return $this->hasMany(Statuses::className(),['status_id' => 'id']);
+    }
 }

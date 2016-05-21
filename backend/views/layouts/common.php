@@ -162,6 +162,7 @@ $bundle = BackendAsset::register($this);
                             'options'=>['class'=>'treeview'],
                             'items'=>[
                                 ['label'=>Yii::t('backend', 'products'), 'url'=>['/product/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
+                                ['label'=>Yii::t('backend', 'prices'), 'url'=>['/prices/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
                                 ['label'=>Yii::t('backend', 'brands'), 'url'=>['/brand/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
                                 ['label'=>Yii::t('backend', 'bulks'), 'url'=>['/bulk/index'], 'icon'=>'<i class="fa fa-angle-double-right"></i>'],
                                 ['label'=>Yii::t('backend', 'Import Products'), 'url' => ['/product/import'], 'icon'=>'<i class="fa fa-angle-double-right"></i>']

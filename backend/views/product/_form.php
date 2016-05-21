@@ -26,9 +26,6 @@ use yii\widgets\ActiveForm;
 
             <div class="row">
                 <div class = "col-md-6">
-                    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class = "col-md-6">
                     <?= $form->field($model, 'product_code')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>

@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'product_code',
-            'gender',
             [
              'attribute' => 'brand_id',
              'value'  => function($model) {
@@ -36,14 +35,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'product_name',
             [
-            'attribute' => 'description',
-            'format' => 'html'
-            ],
-            [
              'attribute' => 'bulk_id',
              'value' => function($model) {
                  return $model->bulk ? $model->bulk->bulk : null;
              }
+            ],
+            [
+                'attribute' => 'price',
+                'value' => function($model) {
+                    $status = Yii::$app->user->identity->userProfile;
+                    print_r($status);
+                    //return $status;
+                }
+            ],
+            [
+                'label'=>'add_prices',
+                'format' => 'html',
+                'value'=>function ($model) {
+                    return Html::a('Установить цену', ['/prices/create', 'id' => $model->id]);
+                },
             ],
             [
                 'attribute' => 'author_id',
@@ -52,11 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'created_at:datetime',
-            // 'updated_at',
-            // 'status',
-            // 'is_available',
-            // 'is_new',
-            // 'is_action',
+
 
             [
                 'class' => 'yii\grid\ActionColumn',

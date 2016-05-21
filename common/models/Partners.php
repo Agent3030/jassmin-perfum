@@ -112,8 +112,12 @@ class Partners extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Adresses::className(),['partner_id' => 'id']);
     }
-   public function getAdressesI18()
+    public function getAdressesI18()
     {
         return $this->hasOne(AdressesI18::className(),['id' => 'partner_id']);
+    }
+    public function getStatus()
+    {
+        return $this->hasMany(Statuses::className(),['id' => 'status_id']);
     }
 }

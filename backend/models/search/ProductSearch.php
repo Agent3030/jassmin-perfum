@@ -15,11 +15,16 @@ class ProductSearch extends Products
     /**
      * @inheritdoc
      */
+    public $price;
+    public $add_price;
+
     public function rules()
     {
         return [
-            [['id', 'brand_id', 'bulk_id', 'created_at', 'updated_at', 'status', 'is_available', 'is_new', 'is_action'], 'integer'],
-            [['slug', 'product_code', 'gender', 'product_name', 'description'], 'safe'],
+            [['id', 'brand_id', 'bulk_id', 'author_id', 'updater_id', 'created_at', 'updated_at', 'status', 'is_available', 'is_new', 'is_action'], 'integer'],
+            [['price'],  'number'],
+            [['add_price'],'string'],
+            [['product_code', 'gender', 'product_name', 'description'], 'safe'],
         ];
     }
 
@@ -41,17 +46,13 @@ class ProductSearch extends Products
      */
     public function search($params)
     {
-        $query = Products::find();
+        $query = Products::find()->with(['price'])->where(['status'=>1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
@@ -59,8 +60,9 @@ class ProductSearch extends Products
             'id' => $this->id,
             'brand_id' => $this->brand_id,
             'bulk_id' => $this->bulk_id,
-            'author_id'=> $this->author_id,
-            'updater_id'=> $this->updater_id,
+            'author_id' => $this->author_id,
+            'price' => $this->price,
+            'updater_id' => $this->updater_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'status' => $this->status,
@@ -69,8 +71,7 @@ class ProductSearch extends Products
             'is_action' => $this->is_action,
         ]);
 
-        $query->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'product_code', $this->product_code])
+        $query->andFilterWhere(['like', 'product_code', $this->product_code])
             ->andFilterWhere(['like', 'gender', $this->gender])
             ->andFilterWhere(['like', 'product_name', $this->product_name])
             ->andFilterWhere(['like', 'description', $this->description]);

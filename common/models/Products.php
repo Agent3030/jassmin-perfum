@@ -3,17 +3,15 @@
 namespace common\models;
 
 use Yii;
+use common\models\query\ArticleQuery;
 use trntv\filekit\behaviors\UploadBehavior;
 use yii\behaviors\BlameableBehavior;
-use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
-
 
 /**
  * This is the model class for table "products".
  *
  * @property integer $id
- * @property string $slug
  * @property string $product_code
  * @property string $gender
  * @property integer $brand_id
@@ -21,6 +19,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $description
  * @property integer $bulk_id
  * @property integer $author_id
+ * @property integer $price_id
  * @property integer $updater_id
  * @property integer $created_at
  * @property integer $updated_at
@@ -29,32 +28,17 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $is_new
  * @property integer $is_action
  *
- * @property Prices[] $prices
  * @property ProductImages[] $productImages
  * @property User $author
  * @property Brands $brand
  * @property Bulks $bulk
+ * @property Prices $price
  * @property User $updater
  */
 class Products extends \yii\db\ActiveRecord
 {
+
     public $product_images;
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'products';
-    }
-
-    /**
-     * @inheritdoc
-     */
-
-
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -64,11 +48,6 @@ class Products extends \yii\db\ActiveRecord
                 'createdByAttribute' => 'author_id',
                 'updatedByAttribute' => 'updater_id',
 
-            ],
-            [
-                'class'=>SluggableBehavior::className(),
-                'attribute'=>'product_code',
-                'immutable' => true
             ],
             [
                 'class' => UploadBehavior::className(),
@@ -82,22 +61,29 @@ class Products extends \yii\db\ActiveRecord
                 'sizeAttribute' => 'size',
                 'nameAttribute' => 'name',
             ],
-
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'products';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['slug', 'product_code', 'gender', 'product_name'], 'required'],
-            [['slug', 'product_code'], 'unique'],
-            [['brand_id', 'bulk_id', 'author_id', 'updater_id', 'created_at', 'updated_at', 'status', 'is_available', 'is_new', 'is_action'], 'integer'],
-            [['brand_id'], 'exist', 'targetClass' =>Brands::className(), 'targetAttribute'=>'id' ],
-            [['bulk_id'], 'exist', 'targetClass' =>Bulks::className(), 'targetAttribute'=>'id' ],
+            [['product_code', 'gender', 'product_name'], 'required'],
+            [['brand_id', 'bulk_id', 'author_id', 'price_id', 'updater_id', 'created_at', 'updated_at', 'status', 'is_available', 'is_new', 'is_action'], 'integer'],
             [['description'], 'string'],
-            [['slug'], 'string', 'max' => 1024],
             [['product_code', 'product_name'], 'string', 'max' => 128],
             [['gender'], 'string', 'max' => 32],
-            [['product_images'], 'safe'],
+            [['product_images'], 'safe']
         ];
     }
 
@@ -108,7 +94,6 @@ class Products extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'slug' => 'Slug',
             'product_code' => 'Product Code',
             'gender' => 'Gender',
             'brand_id' => 'Brand ID',
@@ -116,6 +101,7 @@ class Products extends \yii\db\ActiveRecord
             'description' => 'Description',
             'bulk_id' => 'Bulk ID',
             'author_id' => 'Author ID',
+            'price_id' => 'Price ID',
             'updater_id' => 'Updater ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -124,14 +110,6 @@ class Products extends \yii\db\ActiveRecord
             'is_new' => 'Is New',
             'is_action' => 'Is Action',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPrices()
-    {
-        return $this->hasMany(Prices::className(), ['product_id' => 'id']);
     }
 
     /**
@@ -164,6 +142,14 @@ class Products extends \yii\db\ActiveRecord
     public function getBulk()
     {
         return $this->hasOne(Bulks::className(), ['id' => 'bulk_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPrice()
+    {
+        return $this->hasOne(Prices::className(), ['id' => 'price_id']);
     }
 
     /**

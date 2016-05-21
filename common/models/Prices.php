@@ -8,17 +8,18 @@ use Yii;
  * This is the model class for table "prices".
  *
  * @property integer $id
- * @property integer $product_id
- * @property integer $bulk_id
  * @property integer $status_id
  * @property double $prices
+ * @property integer $currency_id
+ * @property integer $author_id
+ * @property integer $updater_id
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $status
  *
- * @property Bulks $bulk
+ * @property Currency $currency
  * @property Statuses $status0
- * @property Products $product
+ * @property Products[] $products
  */
 class Prices extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,7 @@ class Prices extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'bulk_id', 'status_id', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['status_id', 'currency_id', 'author_id', 'updater_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['prices'], 'number']
         ];
     }
@@ -48,10 +49,11 @@ class Prices extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'product_id' => 'Product ID',
-            'bulk_id' => 'Bulk ID',
             'status_id' => 'Status ID',
             'prices' => 'Prices',
+            'currency_id' => 'Currency ID',
+            'author_id' => 'Author ID',
+            'updater_id' => 'Updater ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
@@ -61,9 +63,9 @@ class Prices extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBulk()
+    public function getCurrency()
     {
-        return $this->hasOne(Bulks::className(), ['id' => 'bulk_id']);
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
 
     /**
@@ -77,8 +79,8 @@ class Prices extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProduct()
+    public function getProducts()
     {
-        return $this->hasOne(Products::className(), ['id' => 'product_id']);
+        return $this->hasMany(Products::className(), ['price_id' => 'id']);
     }
 }
